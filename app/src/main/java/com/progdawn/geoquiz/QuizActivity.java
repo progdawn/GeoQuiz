@@ -1,5 +1,6 @@
 package com.progdawn.geoquiz;
 
+import java.text.DecimalFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String KEY_TOTAL_ANSWERED = "answered";
+    private static final String KEY_TOTAL_CORRECT = "correct";
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
@@ -29,6 +32,8 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int totalAnswered = 0;
+    private int totalCorrect = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,10 @@ public class QuizActivity extends AppCompatActivity {
 
         if(savedInstanceState != null){
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            totalAnswered = savedInstanceState.getInt(KEY_TOTAL_ANSWERED, 0);
+            totalCorrect = savedInstanceState.getInt(KEY_TOTAL_CORRECT, 0);
         }
+
 
         mQuestionTextView = (TextView)findViewById(R.id.question_text_view);
 
@@ -102,6 +110,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+        savedInstanceState.putInt(KEY_TOTAL_ANSWERED, totalAnswered);
+        savedInstanceState.putInt(KEY_TOTAL_CORRECT, totalCorrect);
     }
 
     @Override
@@ -127,9 +137,11 @@ public class QuizActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
 
         int messageResId = 0;
+        totalAnswered += 1;
 
         if(userPressedTrue == answerIsTrue){
             messageResId = R.string.correct_toast;
+            totalCorrect += 1;
         } else {
             messageResId = R.string.incorrect_toast;
         }
@@ -140,5 +152,11 @@ public class QuizActivity extends AppCompatActivity {
 
         mTrueButton.setVisibility(View.INVISIBLE);
         mFalseButton.setVisibility(View.INVISIBLE);
+
+        if(mCurrentIndex == 5){
+            double score = ((double)totalCorrect / (double)totalAnswered) * 100;
+            String scoreText = String.valueOf(Math.round(score)) + "% correct!";
+            Toast.makeText(QuizActivity.this, scoreText, Toast.LENGTH_SHORT).show();
+        }
     }
 }
