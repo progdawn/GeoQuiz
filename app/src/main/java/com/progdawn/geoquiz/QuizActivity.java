@@ -119,6 +119,8 @@ public class QuizActivity extends AppCompatActivity {
     private void updateQuestion(){
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+        mTrueButton.setVisibility(View.VISIBLE);
+        mFalseButton.setVisibility(View.VISIBLE);
     }
 
     private void checkAnswer(boolean userPressedTrue){
@@ -135,5 +137,8 @@ public class QuizActivity extends AppCompatActivity {
         Toast answerToast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT);
         answerToast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 300);
         answerToast.show();
+
+        mTrueButton.setVisibility(View.INVISIBLE);
+        mFalseButton.setVisibility(View.INVISIBLE);
     }
 }
