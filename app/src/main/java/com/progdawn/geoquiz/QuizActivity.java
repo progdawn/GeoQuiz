@@ -83,6 +83,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        //CheatActivity wants to know if the answer is true. I'll let it know.
         mCheatButton = (Button)findViewById(R.id.cheat_button);
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,43 +95,6 @@ public class QuizActivity extends AppCompatActivity {
         });
 
         updateQuestion();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        Log.d(TAG, "onResume() called");
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        super.onSaveInstanceState(savedInstanceState);
-        Log.i(TAG, "onSaveInstanceState");
-        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
-    }
-
-    @Override
-    public void onStop(){
-        super.onStop();
-        Log.d(TAG, "onStop() called");
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
     }
 
     @Override
@@ -175,4 +139,44 @@ public class QuizActivity extends AppCompatActivity {
         mTrueButton.setVisibility(View.INVISIBLE);
         mFalseButton.setVisibility(View.INVISIBLE);
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume() called");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause() called");
+    }
+
+    //saves which question the user is currently on
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.d(TAG, "onStop() called");
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() called");
+    }
+
+
 }
